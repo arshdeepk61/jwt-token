@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "b0c5bf37-f203-4bfb-8dc1-1a2a1b615d0c",
+    "name": "JWT Token Service",
+    "description": "Postman collection for Spring Security with JWT Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"token\", jsonData.accessToken);",
+                  "    console.log('Token saved: ' + jsonData.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "id": "1a899c4b-f98a-4e1f-bc1f-0e77b9fa7452"
+              }
+            }
+          ],
+          "id": "d36c637b-caff-4db8-a158-0aff14e638b6",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Login with username and password. Returns JWT access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "id": "a6f71468-e4f2-4d7a-8cca-61dd61a36c1a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/auth/refresh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Refresh an existing JWT token to get a new one."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Token",
+          "id": "4e96e1d9-9222-4085-a116-55d7200a5219",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/auth/validate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "auth",
+                "validate"
+              ]
+            },
+            "description": "Validate a JWT token and check if it's valid and not expired."
+          },
+          "response": []
+        }
+      ],
+      "id": "f4f02295-2c5d-413e-ac52-97709c330dfe",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Protected Resources",
+      "item": [
+        {
+          "name": "Get Current User",
+          "id": "876b79fb-ca25-4efb-9721-0b6049749875",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8085/api/auth/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "auth",
+                "user"
+              ]
+            },
+            "description": "Get current authenticated user information. Requires valid JWT token in Authorization header."
+          },
+          "response": []
+        }
+      ],
+      "id": "31f84845-0ff1-4138-8aeb-772680151cef",
+      "description": "Protected endpoints that require authentication"
+    }
+  ],
+  "variable": [
+    {
+      "id": "07999c48-d8e4-475b-9862-f03f556d4519",
+      "key": "base_url",
+      "value": "http://localhost:8085",
+      "type": "string"
+    },
+    {
+      "id": "320beea2-3a51-4aab-95f4-aabaf1a0bc20",
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

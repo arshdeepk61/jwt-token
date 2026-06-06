@@ -9,8 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -135,6 +140,53 @@ public class AuthController {
 
         } catch (Exception e) {
             log.error("Failed to get current user");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/security-context")
+    public ResponseEntity<?> printSecurityContext() {
+        try {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            Authentication authentication = securityContext.getAuthentication();
+
+            StringBuilder securityInfo = new StringBuilder();
+
+            securityInfo.append("\n========== SPRING SECURITY CONTEXT ==========\n");
+
+            if (authentication != null) {
+                securityInfo.append("Principal: ").append(authentication.getPrincipal()).append("\n");
+                securityInfo.append("Authenticated: ").append(authentication.isAuthenticated()).append("\n");
+                securityInfo.append("Name: ").append(authentication.getName()).append("\n");
+                securityInfo.append("Credentials: ").append(authentication.getCredentials()).append("\n");
+                securityInfo.append("Details: ").append(authentication.getDetails()).append("\n");
+
+                securityInfo.append("Authorities: ");
+                for (GrantedAuthority authority : authentication.getAuthorities()) {
+                    securityInfo.append(authority.getAuthority()).append(", ");
+                }
+                securityInfo.append("\n");
+            } else {
+                securityInfo.append("Authentication: NULL\n");
+            }
+
+            securityInfo.append("============================================\n");
+
+            log.info(securityInfo.toString());
+
+            return ResponseEntity.ok(Map.of(
+                    "securityContext", securityInfo.toString(),
+                    "authenticated", authentication != null && authentication.isAuthenticated(),
+                    "username", authentication != null ? authentication.getName() : "ANONYMOUS",
+                    "authorities", authentication != null ? 
+                        authentication.getAuthorities().stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .toList() : List.of()
+            ));
+
+        } catch (Exception e) {
+            log.error("Failed to print security context", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponse("Error", e.getMessage()));
         }
