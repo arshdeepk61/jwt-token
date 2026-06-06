@@ -23,13 +23,14 @@ public class TokenBlacklistService {
     // Check if token is blacklisted
     public boolean isBlacklisted(String jti) {
         Long expirationTime = blacklist.get(jti);
-        
+
         if (expirationTime == null) {
             return false; // Not in blacklist
         }
 
-        // Check if still valid (not expired)
-        if (System.currentTimeMillis() > expirationTime) {
+        // Treat expirationTime <= now as expired and remove it
+        long now = System.currentTimeMillis();
+        if (now >= expirationTime) {
             blacklist.remove(jti); // Clean up expired entries
             return false;
         }
@@ -39,19 +40,21 @@ public class TokenBlacklistService {
 
     // Revoke token by JTI
     public void revokeToken(String jti) {
-        blacklist.put(jti, System.currentTimeMillis()); // Immediate revocation
-        log.info("Token {} revoked immediately", jti);
+        // Mark token as expired immediately so cleanup will remove it
+        blacklist.put(jti, System.currentTimeMillis() - 1);
+        log.info("Token {} revoked immediately (marked expired)", jti);
     }
 
     // Clean up expired entries (run periodically)
     public void cleanupExpiredTokens() {
         long now = System.currentTimeMillis();
         int beforeSize = blacklist.size();
-        
-        blacklist.entrySet().removeIf(entry -> entry.getValue() < now);
-        
+
+        // Remove entries whose expiration time is <= now
+        blacklist.entrySet().removeIf(entry -> entry.getValue() <= now);
+
         int afterSize = blacklist.size();
-        log.debug("Cleaned up {} expired tokens. Blacklist size: {} -> {}", 
+        log.debug("Cleaned up {} expired tokens. Blacklist size: {} -> {}",
                   beforeSize - afterSize, beforeSize, afterSize);
     }
 
@@ -63,12 +66,14 @@ public class TokenBlacklistService {
     // Check token status
     public String getTokenStatus(String jti) {
         Long expirationTime = blacklist.get(jti);
-        
+
         if (expirationTime == null) {
             return "NOT_BLACKLISTED";
         }
 
-        if (System.currentTimeMillis() > expirationTime) {
+        if (System.currentTimeMillis() >= expirationTime) {
+            // Remove expired entries proactively
+            blacklist.remove(jti);
             return "BLACKLIST_EXPIRED";
         }
 
