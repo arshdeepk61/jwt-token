@@ -1,7 +1,0 @@
-server:
-  port: 8081
-
-keycloak:
-  token-url: http://localhost:8080/realms/local-dev/protocol/openid-connect/token
-  client-id: local-client
-  client-secret: 9NvTxceJCSLQf7noTByRa4PDhqGeS3MN
