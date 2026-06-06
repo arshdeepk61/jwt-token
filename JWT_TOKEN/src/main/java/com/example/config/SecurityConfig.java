@@ -73,6 +73,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/advanced/login-advanced")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/advanced/token-refresh")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/advanced/validate-advanced")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/advanced/**")).authenticated()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .anyRequest().authenticated()
