@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 
