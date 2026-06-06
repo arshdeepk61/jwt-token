@@ -1,29 +1,53 @@
 {
   "info": {
+    "_postman_id": "jwt-token-service-001",
     "name": "JWT Token Service",
     "description": "Postman collection for Spring Security with JWT Authentication",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "123456"
   },
   "item": [
     {
       "name": "Authentication",
+      "description": "Authentication endpoints",
       "item": [
         {
           "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"token\", jsonData.accessToken);",
+                  "    console.log('Token saved: ' + jsonData.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\"\n}"
+              "raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "http://localhost:8085/api/auth/login",
+              "raw": "{{base_url}}/api/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -46,15 +70,21 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
-            ],
+              "raw": "{\n  \"token\": \"{{token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:8085/api/auth/refresh",
+              "raw": "{{base_url}}/api/auth/refresh",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -77,15 +107,21 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
+              "raw": "{\n  \"token\": \"{{token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
-              "raw": "http://localhost:8085/api/auth/validate",
+              "raw": "{{base_url}}/api/auth/validate",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -101,10 +137,12 @@
           },
           "response": []
         }
-      ]
+      ],
+      "protocolProfileBehavior": {}
     },
     {
       "name": "Protected Resources",
+      "description": "Protected endpoints that require authentication",
       "item": [
         {
           "name": "Get Current User",
@@ -113,11 +151,17 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123..."
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
-              "raw": "http://localhost:8085/api/auth/user",
+              "raw": "{{base_url}}/api/auth/user",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -133,19 +177,41 @@
           },
           "response": []
         }
-      ]
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
     }
   ],
   "variable": [
     {
-      "key": "token",
-      "value": "",
-      "description": "JWT Token stored after login"
-    },
-    {
       "key": "base_url",
       "value": "http://localhost:8085",
-      "description": "Base URL of the JWT Token Service"
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
-  ]
+  ],
+  "protocolProfileBehavior": {}
 }
