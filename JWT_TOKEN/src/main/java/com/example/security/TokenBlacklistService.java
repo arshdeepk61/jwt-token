@@ -63,6 +63,11 @@ public class TokenBlacklistService {
         return blacklist.size();
     }
 
+    // Return a copy of the blacklist entries for inspection (JTI -> expiration timestamp)
+    public Map<String, Long> getAllEntries() {
+        return new HashMap<>(blacklist);
+    }
+
     // Check token status
     public String getTokenStatus(String jti) {
         Long expirationTime = blacklist.get(jti);

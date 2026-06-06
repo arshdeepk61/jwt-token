@@ -265,13 +265,26 @@ public class AdvancedAuthController {
     public ResponseEntity<?> getBlacklistStats() {
         try {
             int blacklistSize = tokenBlacklistService.getBlacklistSize();
+            Map<String, Long> entries = tokenBlacklistService.getAllEntries();
+
+            // Convert to readable map: jti -> {expiresAt, expired}
+            Map<String, Object> details = new HashMap<>();
+            entries.forEach((k, v) -> {
+                Map<String, Object> info = new HashMap<>();
+                info.put("expiresAt", v);
+                info.put("expiresAtHuman", new java.util.Date(v).toString());
+                info.put("expired", System.currentTimeMillis() >= v);
+                details.put(k, info);
+            });
+
             return ResponseEntity.ok(Map.of(
                     "blacklistSize", blacklistSize,
-                    "message", "Current blacklisted tokens"
+                    "entries", details,
+                    "message", "Current blacklisted tokens (detailed)"
             ));
 
         } catch (Exception e) {
-            log.error("Blacklist stats retrieval failed");
+            log.error("Blacklist stats retrieval failed", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponse("Error", e.getMessage()));
         }
