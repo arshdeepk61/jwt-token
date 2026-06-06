@@ -283,9 +283,17 @@
                   "    var jsonData = pm.response.json();",
                   "    pm.environment.set(\"accessToken\", jsonData.accessToken);",
                   "    pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+                  "    pm.environment.set(\"jti\", jsonData.jti || '');",
                   "    console.log('✓ New tokens generated with rotation');",
+                  "    if (jsonData.roles && jsonData.roles.length > 0) {",
+                  "        console.log('Roles: ' + jsonData.roles.join(','));",
+                  "        pm.test('Roles present', function () { pm.expect(jsonData.roles.length).to.be.above(0); });",
+                  "    } else {",
+                  "        console.log('No roles in response — server-side roles lookup expected at refresh');",
+                  "    }",
                   "}"
                 ],
+
                 "type": "text/javascript",
                 "id": "e39a1b8a-288a-4e13-9c1d-a352bec125fa"
               }
