@@ -200,17 +200,29 @@ public class AdvancedAuthController {
         }
     }
 
-    // Check if token is blacklisted
+    // Check if token is blacklisted (accept either full JWT or JTI string)
     @PostMapping("/check-blacklist")
     public ResponseEntity<?> checkBlacklist(@RequestBody ValidateTokenRequest request) {
         try {
-            String jti = advancedTokenProvider.extractJti(request.getToken());
-            String status = tokenBlacklistService.getTokenStatus(jti);
+            String tokenOrJti = request.getToken();
+            if (tokenOrJti == null || tokenOrJti.isBlank()) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Invalid request", "Token or JTI is required"));
+            }
 
+            String jti;
+            // If the input looks like a JWT (contains exactly two dots), extract jti from it
+            if (tokenOrJti.chars().filter(ch -> ch == '.').count() == 2) {
+                jti = advancedTokenProvider.extractJti(tokenOrJti);
+            } else {
+                // treat the provided value as JTI directly
+                jti = tokenOrJti;
+            }
+
+            String status = tokenBlacklistService.getTokenStatus(jti);
             return ResponseEntity.ok(new ErrorResponse("Status", status));
 
         } catch (Exception e) {
-            log.error("Blacklist check failed");
+            log.error("Blacklist check failed", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponse("Check failed", e.getMessage()));
         }
