@@ -11,6 +11,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -31,6 +35,9 @@ public class AdvancedAuthController {
 
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     // Advanced login with access + refresh tokens
     @PostMapping("/login-advanced")
@@ -94,8 +101,20 @@ public class AdvancedAuthController {
             }
 
             String userId = advancedTokenProvider.extractUsername(request.getToken());
-            String username = advancedTokenProvider.extractUsername(request.getToken());
-            List<String> roles = advancedTokenProvider.extractRoles(request.getToken());
+            // username is stored as a claim in the refresh token
+            String username = (String) advancedTokenProvider.extractAllClaims(request.getToken()).get("username");
+
+            // Prefer server-side lookup for current roles so role changes are respected
+            List<String> roles;
+            try {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                roles = userDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                // Fallback: if roles aren't found in user store, try extracting from token (if present)
+                roles = advancedTokenProvider.extractRoles(request.getToken());
+            }
 
             // Generate new tokens
             String newAccessToken = advancedTokenProvider.generateAccessToken(userId, username, roles);
