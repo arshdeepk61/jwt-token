@@ -49,14 +49,14 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-The application will start on `http://localhost:8080`
+The application will start on `http://localhost:8085`
 
 ## Configuration
 
 Edit `src/main/resources/application.properties`:
 
 ```properties
-server.port=8080
+server.port=8085
 
 # JWT Settings
 jwt.secret=mySecretKeyForJWTTokenGenerationAndValidationPurposesOnly1234567890
@@ -74,7 +74,7 @@ spring.h2.console.path=/h2-console
 Generate JWT token using credentials.
 
 ```http
-POST /api/auth/login
+POST http://localhost:8085/api/auth/login
 Content-Type: application/json
 
 {
@@ -98,7 +98,7 @@ Content-Type: application/json
 Refresh an existing JWT token.
 
 ```http
-POST /api/auth/refresh
+POST http://localhost:8085/api/auth/refresh
 Content-Type: application/json
 
 {
@@ -121,7 +121,7 @@ Content-Type: application/json
 Check if a JWT token is valid.
 
 ```http
-POST /api/auth/validate
+POST http://localhost:8085/api/auth/validate
 Content-Type: application/json
 
 {
@@ -142,7 +142,7 @@ Content-Type: application/json
 Get authenticated user information.
 
 ```http
-GET /api/auth/user
+GET http://localhost:8085/api/auth/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
 ```
 
@@ -176,18 +176,18 @@ The application includes two pre-configured users:
 ### Manual Testing Steps:
 ```bash
 # 1. Login and get token
-curl -X POST http://localhost:8080/api/auth/login \
+curl -X POST http://localhost:8085/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"user","password":"password"}'
 
 # 2. Use token in subsequent requests
 curl -H "Authorization: Bearer <TOKEN>" \
-  http://localhost:8080/api/auth/user
+  http://localhost:8085/api/auth/user
 ```
 
 ## Database Access
 
-Access H2 Console at: `http://localhost:8080/h2-console`
+Access H2 Console at: `http://localhost:8085/h2-console`
 
 - **JDBC URL:** `jdbc:h2:mem:testdb`
 - **User:** `sa`
@@ -263,10 +263,10 @@ choco install maven
 # Or download from https://maven.apache.org/download.cgi
 ```
 
-### Issue: Port 8080 already in use
+### Issue: Port 8085 already in use
 **Solution:** Change port in `application.properties`
 ```properties
-server.port=8081
+server.port=8086
 ```
 
 ### Issue: H2 console not accessible

@@ -23,12 +23,12 @@
               "raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/auth/login",
+              "raw": "http://localhost:8085/api/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "8080",
+              "port": "8085",
               "path": [
                 "api",
                 "auth",
@@ -54,12 +54,12 @@
               "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
             ],
             "url": {
-              "raw": "http://localhost:8080/api/auth/refresh",
+              "raw": "http://localhost:8085/api/auth/refresh",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "8080",
+              "port": "8085",
               "path": [
                 "api",
                 "auth",
@@ -85,12 +85,12 @@
               "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/auth/validate",
+              "raw": "http://localhost:8085/api/auth/validate",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "8080",
+              "port": "8085",
               "path": [
                 "api",
                 "auth",
@@ -117,12 +117,12 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:8080/api/auth/user",
+              "raw": "http://localhost:8085/api/auth/user",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "8080",
+              "port": "8085",
               "path": [
                 "api",
                 "auth",
@@ -144,7 +144,7 @@
     },
     {
       "key": "base_url",
-      "value": "http://localhost:8080",
+      "value": "http://localhost:8085",
       "description": "Base URL of the JWT Token Service"
     }
   ]
