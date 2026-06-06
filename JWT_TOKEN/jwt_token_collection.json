@@ -1,0 +1,151 @@
+{
+  "info": {
+    "name": "JWT Token Service",
+    "description": "Postman collection for Spring Security with JWT Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"user\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Login with username and password. Returns JWT access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/auth/refresh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Refresh an existing JWT token to get a new one."
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123...\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/validate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "validate"
+              ]
+            },
+            "description": "Validate a JWT token and check if it's valid and not expired."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Protected Resources",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOjEsInN1YiI6InVzZXIiLCJpYXQiOjE3MjA1NTMwMjMsImV4cCI6MTcyMDYzOTQyM30.aBc123..."
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/auth/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "user"
+              ]
+            },
+            "description": "Get current authenticated user information. Requires valid JWT token in Authorization header."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "description": "JWT Token stored after login"
+    },
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "description": "Base URL of the JWT Token Service"
+    }
+  ]
+}
