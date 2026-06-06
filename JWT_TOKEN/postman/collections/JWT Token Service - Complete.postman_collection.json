@@ -1,15 +1,13 @@
 {
   "info": {
-    "_postman_id": "jwt-token-service-complete",
+    "_postman_id": "70995e61-091f-491a-aefd-59e3e47ab524",
     "name": "JWT Token Service - Complete",
     "description": "Comprehensive Postman collection for JWT Authentication with basic and advanced endpoints",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "123456"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
       "name": "Basic Authentication",
-      "description": "Basic authentication endpoints",
       "item": [
         {
           "name": "Login",
@@ -24,10 +22,12 @@
                   "    console.log('✓ Token saved: ' + jsonData.accessToken.substring(0, 20) + '...');",
                   "}"
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "id": "4e6a152b-17a1-4edb-9319-ba796e920ba1"
               }
             }
           ],
+          "id": "7217e8f2-932b-43a5-9655-42daa8bf6ef9",
           "request": {
             "method": "POST",
             "header": [
@@ -47,7 +47,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/login",
+              "raw": "http://localhost:8085/api/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -65,6 +65,7 @@
         },
         {
           "name": "Refresh Token",
+          "id": "c8af2f2d-fffc-4a4c-a291-efd50284bc60",
           "request": {
             "method": "POST",
             "header": [
@@ -84,7 +85,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/refresh",
+              "raw": "http://localhost:8085/api/auth/refresh",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -102,6 +103,7 @@
         },
         {
           "name": "Validate Token",
+          "id": "2c29a6c8-c544-4ad6-9257-dd7ca790093d",
           "request": {
             "method": "POST",
             "header": [
@@ -121,7 +123,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/validate",
+              "raw": "http://localhost:8085/api/auth/validate",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -139,6 +141,7 @@
         },
         {
           "name": "Get Current User",
+          "id": "8931cdd9-d002-46af-8ae2-4fe8757dc1dc",
           "request": {
             "method": "GET",
             "header": [
@@ -154,7 +157,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/auth/user",
+              "raw": "http://localhost:8085/api/auth/user",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -172,6 +175,7 @@
         },
         {
           "name": "Print Security Context",
+          "id": "49696680-ddfe-419a-b119-4884165aabb1",
           "request": {
             "method": "GET",
             "header": [
@@ -187,7 +191,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/auth/security-context",
+              "raw": "http://localhost:8085/api/auth/security-context",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -204,11 +208,11 @@
           "response": []
         }
       ],
-      "protocolProfileBehavior": {}
+      "id": "f61ff6ac-2095-4fc6-9de8-5de70f65df30",
+      "description": "Basic authentication endpoints"
     },
     {
       "name": "Advanced Authentication",
-      "description": "Advanced authentication with refresh tokens, token rotation, and blacklisting",
       "item": [
         {
           "name": "Advanced Login",
@@ -227,10 +231,12 @@
                   "    console.log('✓ JTI: ' + jsonData.jti);",
                   "}"
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "id": "5ce5b510-81b1-4aa6-90dd-9e1c654fb3ad"
               }
             }
           ],
+          "id": "b9db169b-e60e-460a-af04-7fb3524e4ffb",
           "request": {
             "method": "POST",
             "header": [
@@ -250,7 +256,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/advanced/login-advanced",
+              "raw": "http://localhost:8085/api/advanced/login-advanced",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -280,10 +286,12 @@
                   "    console.log('✓ New tokens generated with rotation');",
                   "}"
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "id": "e39a1b8a-288a-4e13-9c1d-a352bec125fa"
               }
             }
           ],
+          "id": "d8199dd6-68d8-4b9b-90e6-2d5a1651a984",
           "request": {
             "method": "POST",
             "header": [
@@ -303,7 +311,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/advanced/token-refresh",
+              "raw": "http://localhost:8085/api/advanced/token-refresh",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -321,6 +329,7 @@
         },
         {
           "name": "Advanced Validate Token",
+          "id": "a31b1b04-2a8c-4462-bc6c-30f569bd6d23",
           "request": {
             "method": "POST",
             "header": [
@@ -340,7 +349,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/advanced/validate-advanced",
+              "raw": "http://localhost:8085/api/advanced/validate-advanced",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -358,6 +367,7 @@
         },
         {
           "name": "Logout (Blacklist Token)",
+          "id": "283d0b15-e638-4e2d-adad-210ef494567b",
           "request": {
             "method": "POST",
             "header": [
@@ -373,7 +383,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/advanced/logout",
+              "raw": "http://localhost:8085/api/advanced/logout",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -391,6 +401,7 @@
         },
         {
           "name": "Check Blacklist Status",
+          "id": "cd9b6e8b-42d6-4c6c-b661-15fff71c2c3d",
           "request": {
             "method": "POST",
             "header": [
@@ -410,7 +421,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/advanced/check-blacklist",
+              "raw": "http://localhost:8085/api/advanced/check-blacklist",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -428,6 +439,7 @@
         },
         {
           "name": "Get Token Information",
+          "id": "281ab8b9-fb66-446d-99e2-eb0beeba48f5",
           "request": {
             "method": "POST",
             "header": [
@@ -447,7 +459,7 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/api/advanced/token-info",
+              "raw": "http://localhost:8085/api/advanced/token-info",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -465,6 +477,7 @@
         },
         {
           "name": "Blacklist Statistics",
+          "id": "bc9bad5b-d381-42b3-a061-156b18f896cd",
           "request": {
             "method": "GET",
             "header": [
@@ -475,7 +488,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/advanced/blacklist-stats",
+              "raw": "http://localhost:8085/api/advanced/blacklist-stats",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -493,6 +506,7 @@
         },
         {
           "name": "Cleanup Blacklist",
+          "id": "08a8e35b-0b86-4865-8243-47c08bbebac7",
           "request": {
             "method": "POST",
             "header": [
@@ -503,7 +517,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/advanced/cleanup-blacklist",
+              "raw": "http://localhost:8085/api/advanced/cleanup-blacklist",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -520,59 +534,44 @@
           "response": []
         }
       ],
-      "protocolProfileBehavior": {}
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
+      "id": "5c99f837-d36e-4981-b5fb-ec91de266997",
+      "description": "Advanced authentication with refresh tokens, token rotation, and blacklisting"
     }
   ],
   "variable": [
     {
+      "id": "5f8c2953-abbe-4d94-9d20-328cc267e331",
       "key": "base_url",
       "value": "http://localhost:8085",
       "type": "string"
     },
     {
+      "id": "7f205efd-26a3-4f3d-a573-4bf17a5f1107",
       "key": "token",
       "value": "",
       "type": "string",
       "description": "JWT token from basic login"
     },
     {
+      "id": "2b717716-df75-4a9a-87af-d25b8dadb712",
       "key": "accessToken",
       "value": "",
       "type": "string",
       "description": "Access token from advanced login"
     },
     {
+      "id": "0557299c-b55f-43a2-a8ad-f8878ac7cbdd",
       "key": "refreshToken",
       "value": "",
       "type": "string",
       "description": "Refresh token from advanced login"
     },
     {
+      "id": "7ae149a5-106e-4774-9bb9-e3cdeebf6e4e",
       "key": "jti",
       "value": "",
       "type": "string",
       "description": "JWT ID for tracking"
     }
-  ],
-  "protocolProfileBehavior": {}
+  ]
 }
